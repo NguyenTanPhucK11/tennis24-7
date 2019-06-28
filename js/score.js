@@ -29,7 +29,7 @@ function logIn(){
   var docRef = db.collection("Account").where("email", "==","" +document.getElementById("email-login").value)
   docRef.get().then(function (querySnapshot) {
      querySnapshot.forEach( function(data){
-        if(document.getElementById("password-login").value == data.data().password || data.data().password == null){
+        if(document.getElementById("password-login").value == data.data().password){
           alert("Login");
           login = true;
           Login();
@@ -47,7 +47,6 @@ function logIn(){
         alert("Account not exist.")
       }
     })
-
 }
 
 function logOut(){
@@ -59,7 +58,6 @@ function logOut(){
 function CreateAccount(){
   document.querySelector("#form-login").innerHTML = `
   <div class="login-form">
-    <form id = "formAccount">
         <h2 style="color: black" class="text-center">Register</h2>     
         <div class="form-group">
             <input type="text" class="form-control" placeholder="First name" id = "firstname" required="required">
@@ -82,7 +80,6 @@ function CreateAccount(){
         <div class="form-group">
               <button type="submit" class="btn btn-primary btn-block" id = "account" onclick ="Account()">Next</button>
           </div>
-    </form>
   </div>`
 }
 function Account(){
@@ -146,8 +143,7 @@ function Login(){
     $('button[id^="edit"]').hide();
     document.getElementById("inline-popups").innerHTML = '';
     document.querySelector("#form-login").innerHTML = `
-    <div class="login-form">
-      <form >
+    <div class="login-form" >
           <h2 style="color: black" class="text-center">Log in</h2>       
           <div class="form-group">
               <input type="email" class="form-control" placeholder="Username" id = "email-login" required="required">
@@ -162,7 +158,7 @@ function Login(){
               <label style="color: black" class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
               <a href="#" class="pull-right">Forgot Password?</a>
           </div>        
-      </form>
+     
       <p class="text-center" onclick = "CreateAccount()"><a href="#">Create an Account</a></p>
     </div>`
   }
