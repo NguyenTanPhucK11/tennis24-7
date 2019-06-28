@@ -1,0 +1,24 @@
+{
+  "name": "tennis-247",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo build",
+    "start": "open index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NguyenTanPhucK11/tennis-247.git"
+  },
+  "author": "Kid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NguyenTanPhucK11/tennis-247/issues"
+  },
+  "homepage": "https://github.com/NguyenTanPhucK11/tennis-247#readme",
+  "dependencies": {
+    "@google-cloud/storage": "^2.5.0"
+  }
+}

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tennis</title>
+
+    <!-- load CSS -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600"
+    />
+    <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" media="screen" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="slick/slick.css" />
+    <link rel="stylesheet" href="slick/slick-theme.css" />
+    <link rel="stylesheet" href="css/magnific-popup.css" />
+    <link rel="stylesheet" href="css/tooplate-style.css" />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+
+    <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase-firestore.js"></script>
+    <script src="https://unpkg.com/ag-grid-community@20.2.0/dist/ag-grid-community.min.js"></script>
+
+    <script> 
+    var checkCount ; 
+
+    </script>
+
+    <!-- Templatemo style -->
+    
+  </head>
+
+  <body>
+    <!-- Loader -->
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+    </div>
+    <div id = "screen-main">
+    <div class="tm-main-container">
+      <div class="tm-top-container">
+        <!-- Menu -->
+        
+        <nav id="tmNav" class="tm-nav">
+          <a id = "sss" class="tm-navbar-menu" href="#"><i class="fa fa-bars"></i>MENU</a>
+          <ul class="tm-nav-links" >
+            <li class="tm-nav-item active">
+              <a href="#" data-linkid="0" data-align="right" class="tm-nav-link"><i class="fa fa-home"></i> HOME</a>
+            </li>
+            <li class="tm-nav-item">
+              <a href="#" data-linkid="1" data-align="right" class="tm-nav-link"><i class="fa fa-newspaper-o"></i> NEWS</a>
+            </li>
+            <li class="tm-nav-item">
+              <a
+                href="#"
+                data-linkid="2"
+                data-align="middle"
+                class="tm-nav-link"><i class="fa fa-calendar"></i> SCHEDULE</a>
+            </li>
+            <li class="tm-nav-item">
+              <a href="#" data-linkid="3" class="tm-nav-link"><i class="fa fa-trophy"></i> SCORE</a>
+            </li>
+            <li class="tm-nav-item">
+                <a href="#" data-linkid="4" class="tm-nav-link"><i class="fa fa-star"></i> RANKING</a>
+            </li>
+            <li class="tm-nav-item">
+                <a href="#" data-linkid="5" class="tm-nav-link"><i class="fa fa-youtube"></i> HIGHLIGHT</a>
+            </li>
+            <li class="tm-nav-item">
+              <a
+                rel="nofollow" href="https://www.uit.edu.vn"
+                class="tm-nav-link external"><i class="fa fa-info-circle"></i> ABOUT</a>
+            </li>
+            <li class="tm-nav-item">
+                <a href="#" data-linkid="7" class="tm-nav-link"><i class="fa fa-user-circle"></i>  SIGN IN</a>
+            </li>
+            
+          </ul>
+        </nav>
+
+        <!-- Site header -->
+        <header class="tm-site-header-box tm-bg-dark">
+          <h1 class="tm-site-title">Tennis news</h1>
+               
+          <p class="mb-0 tm-site-subtitle"></p>
+        </header>
+      </div>
+      <!-- tm-top-container -->
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Site content -->
+            <div class="tm-content">
+              <!-- Section 0 TENNIS -->
+              <section class="tm-section tm-section-0">
+                <h2 class="tm-section-title mb-3 font-weight-bold">
+                  Introduction
+                </h2>
+                <div class="tm-textbox tm-bg-dark">
+                  <p>
+                    The Card template is last updated on 21 May 2019. Read More button is linked to second page. You can try it now. External link button is added on main menu.
+                  </p>
+                  <p class="mb-0">
+                    Please tell your friends about Tooplate for free templates. This is 70% alpha background.
+                  </p>
+                </div>
+                <a href="#" id="tm_about_link" data-linkid="1" class="tm-link">Read More</a>
+              </section>
+
+              <!-- Section 1 NEWS -->
+              <section class="tm-section tm-section-1" id ="section1">
+                  
+              </section>
+
+              <!-- Section 2 SCHEDULE -->
+              <section class="tm-section tm-section-2 mx-auto"  id = "section2">    
+                 
+                  <style>#uploader{
+                      -webkit-appearance:  none;
+                      appearance: none;
+                      width: 50%;
+                      margin-bottom: 10px
+                  }</style>     
+                  <progress value ="0" max ="100" id ="uploader">0%</progress>
+                  <input type = "file" value="upload" id="fileButton" />              
+              </section>
+
+              <!-- Section 3 SCORE -->
+              <section class="tm-section tm-section-3 mx-auto">
+                
+                  <div class= "main-list" >
+                      <div class="container">
+                          <form action="" class="form-horizontal">
+                            <div class="control-group">
+                                  <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                      <input size="16" id = "datetime"type="text" value="" readonly>
+                                    
+                                      <span class="add-on"><i class="icon-remove"></i></span>
+	    	                            	<span class="add-on"><i class="icon-th"></i></span>
+                                  </div>
+                              <input type="hidden" id="dtp_input2" value="" /><br/>
+                              </div>
+                          </form>
+                      </div>
+                      <button class="btn btn-primary" id = "get_btn" onclick = "scoreData()">Get</button>
+
+                      <input type = "text" class="btn btn-primary" id = "countData" >
+                      <ul id="inline-popups">
+                        
+                      </ul>
+                      <!-- Popup itself -->
+                      <div id="test-popup" class="white-popup mfp-with-anim mfp-hide">
+                             
+                      </div>
+               
+                  <div id = "list-score">
+                      <!-- <button class="tablinks" onclick = "scoreData()">Men</button>
+                      <button class="tablinks" onclick = "scoreData()">Women</button> -->
+                  </div>
+              </section>
+              <!-- Section 4 RANKINGS -->
+              <section class="tm-section tm-section-4" >          
+                  <div id="myGrid" style="height: 100%;" class="ag-theme-balham-dark"></div>
+              </section>
+               <!-- Section 5 HIGHLIGHT -->
+              
+              <section class="tm-section tm-section-5 mx-auto" id = "section5" >
+
+                  <video width="400" controls>
+                    <source src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/video%2F17.mp4?alt=media&token=c498d7f2-266d-4c60-97cb-a5c1144dc7f8" type="video/mp4">
+                
+                  </video>
+                  <div class="col-sm-12 text-center">
+                    <button class="btn btn-primary" onclick="Next()">Next</button>
+                    <button class="btn btn-primary" onclick="Prev()">Prev</button>
+                  </div>
+
+                </section>
+               <!-- Section 6 ABOUT -->
+               <section class="tm-section tm-section-6 mx-auto" >
+
+                   
+                </section>  
+                <!-- Section 7 LOG IN -->
+               <section class="tm-section tm-section-7 mx-auto" >
+                <div id = "addNews"></div>
+                <div class="col-sm-12 text-center" id = "form-login">
+                  
+                </div>
+                   
+                </section>  
+            </div>
+          </div>
+        </div>
+      </div>
+     
+        <!-- Footer -->
+        <footer>
+        
+        </footer>
+      </div>
+    </div>
+    
+    <style>
+      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+    html, body {
+      margin: 0;
+      padding: 10px;
+      -webkit-backface-visibility: hidden;
+    }
+    #Location , #Winner, #Loser, #L1, #L2, #L3, #W1, #W2, #W3 {
+      display: table;
+      background-position: 10px 12px;
+      background-repeat: no-repeat;
+      font-size: 16px;
+      width : 80%;
+      padding: 12px 20px 12px 40px;
+      border: 1px solid #ddd;
+      margin: 0 auto;
+    }
+
+    #LocationUL , #WinnerUL, #LoserUL, #L1UL, #L2UL, #L3UL, #W1UL, #W2UL, #W3UL {
+      list-style-type: none;
+      margin-left: 8.5%;
+      width : 70.5%;
+      position: relative;
+      height: 400px;
+      overflow: auto;
+      position: absolute;
+      z-index: 1;
+      display:inline-block;
+    }
+
+    #LocationUL li a, #WinnerUL li a, #LoserUL li a, #L1UL li a, #L2UL li a, #L3UL li a, #W1UL li a, #W2UL li a, #W3UL li a{
+      border: 1px solid #ddd;
+      margin-top: -1px; /* Prevent double borders */
+      background-color: #f6f6f6;
+      padding: 12px;
+      text-decoration: none;
+      font-size: 18px;
+      color: black;
+      display: block;
+
+    }
+    #LocationUL li a:hover:not(.header), #WinnerUL li a:hover:not(.header), #LoserUL li a:hover:not(.header), #L1UL li a:hover:not(.header), #L2UL li a:hover:not(.header), #L3UL li a:hover:not(.header), #W1UL li a:hover:not(.header), #W2UL li a:hover:not(.header), #W3UL li a:hover:not(.header) {
+      background-color: #eee;
+    }
+    /* text-based popup styling */
+    .white-popup {
+      position: relative;
+      background: #FFF;
+      padding: 25px;
+      width: auto;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    /*
+    ====== Zoom effect =====
+    */
+    .mfp-zoom-in {
+      /* start state */
+      /* animate in */
+      /* animate out */
+    }
+    .mfp-zoom-in .mfp-with-anim {
+      opacity: 0;
+      transition: all 0.2s ease-in-out;
+      transform: scale(0.8);
+    }
+    .mfp-zoom-in.mfp-bg {
+      opacity: 0;
+      transition: all 0.3s ease-out;
+    }
+    .mfp-zoom-in.mfp-ready .mfp-with-anim {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .mfp-zoom-in.mfp-ready.mfp-bg {
+      opacity: 0.8;
+    }
+    .mfp-zoom-in.mfp-removing .mfp-with-anim {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    .mfp-zoom-in.mfp-removing.mfp-bg {
+      opacity: 0;
+    }
+
+
+    /* preview styles */
+    html {
+      font-family: "Calibri", "Trebuchet MS", "Helvetica", sans-serif;
+    }
+
+    h3 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    a,
+    a:visited {
+      color: #1760BF;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #c00;
+    }
+
+    .links li {
+      margin-bottom: 0px;
+    }
+
+    </style>
+
+    
+         
+    </div>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/background.cycle.js"></script>
+    <script src="slick/slick.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+
+    <script src="js/score.js"></script>
+    <script src="js/rankings.js"></script>
+    <script src="js/schedule-news.js"></script>
+    <script src="js/highlight.js"></script>
+   
+
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js'></script>
+
+    <script>
+      let slickInitDone = false;
+      let previousImageId = 0,
+        currentImageId = 0;
+      let pageAlign = "right";
+      let bgCycle;
+      let links;
+      let eachNavLink;
+
+      window.onload = function() {
+        $("body").addClass("loaded");
+      };
+
+      function navLinkClick(e) {
+        if ($(e.target).hasClass("external")) {
+          return;
+        }
+
+        e.preventDefault();
+
+        if ($(e.target).data("align")) {
+          pageAlign = $(e.target).data("align");
+        }
+
+        // Change bg image
+        previousImageId = currentImageId;
+        currentImageId = $(e.target).data("linkid");
+        bgCycle.cycleToNextImage(previousImageId, currentImageId);
+
+        // Change menu item highlight
+        $(`.tm-nav-item:eq(${previousImageId})`).removeClass("active");
+        $(`.tm-nav-item:eq(${currentImageId})`).addClass("active");
+
+        // Change page content
+        $(`.tm-section-${previousImageId}`).fadeOut(function(e) {
+          $(`.tm-section-${currentImageId}`).fadeIn();
+          // Gallery
+          if (currentImageId === 2) {
+            setupSlider();
+          }
+        });
+
+        adjustFooter();
+      }
+
+      $(document).ready(function() {
+        // Set first page
+        $(".tm-section").fadeOut(0);
+        $(".tm-section-0").fadeIn();
+
+        // Set Background images
+        // https://www.jqueryscript.net/slideshow/Simple-jQuery-Background-Image-Slideshow-with-Fade-Transitions-Background-Cycle.html
+        bgCycle = $("body").backgroundCycle({
+          imageUrls: [
+            "img/tennis.jpg",
+            "img/photo-03.jpg",
+            "img/photo-04.jpg",
+            "img/photo-05.jpg",
+            "img/2.jpg",
+            "img/photo-04.jpg"
+          ],
+          fadeSpeed: 2000,
+          duration: -1,
+          backgroundSize: SCALING_MODE_COVER,
+        });
+
+        eachNavLink = $(".tm-nav-link");
+        links = $(".tm-nav-links");
+        
+        // "Menu" open/close
+        if (links.hasClass("open")) {
+          links.fadeIn(0);
+        } else {
+          links.fadeOut(0);
+        }
+
+        $("#tm_about_link").on("click", navLinkClick);
+        $("#tm_work_link").on("click", navLinkClick);
+
+        // Each menu item click
+        eachNavLink.on("click", navLinkClick);
+        
+        links.fadeIn();
+        
+        
+        $(".tm-navbar-menu").click(function(e) {
+          if (links.hasClass("open")) {
+            links.fadeOut();
+          } else {
+            links.fadeIn();
+          }
+
+          links.toggleClass("open");
+        });
+
+        // window resize
+        $(window).resize(function() {
+          // If current page is Gallery page, set it up
+          if (currentImageId === 2) {
+            setupSlider();
+          }
+
+          // Adjust footer
+          adjustFooter();
+        });
+
+        adjustFooter();
+      }); // DOM is ready
+
+      function adjustFooter() {
+        const windowHeight = $(window).height();
+        const topHeight = $(".tm-top-container").height();
+        const middleHeight = $(".tm-content").height();
+        let contentHeight = topHeight + middleHeight;
+
+        if (pageAlign === "left") {
+          contentHeight += $(".tm-bottom-container").height();
+        }
+
+        if (contentHeight > windowHeight) {
+          $(".tm-bottom-container").addClass("tm-static");
+        } else {
+          $(".tm-bottom-container").removeClass("tm-static");
+        }
+      }
+
+      function setupSlider() {
+        let slidesToShow = 4;
+        let slidesToScroll = 2;
+        let windowWidth = $(window).width();
+
+        if (windowWidth < 480) {
+          slidesToShow = 1;
+          slidesToScroll = 1;
+        } else if (windowWidth < 768) {
+          slidesToShow = 2;
+          slidesToScroll = 1;
+        } else if (windowWidth < 992) {
+          slidesToShow = 3;
+          slidesToScroll = 2;
+        }
+
+        if (slickInitDone) {
+          $(".tm-gallery").slick("unslick");
+        }
+
+        slickInitDone = true;
+
+        $(".tm-gallery").slick({
+          dots: true,
+          customPaging: function(slider, i) {
+            var thumb = $(slider.$slides[i]).data();
+            return `<a>${i + 1}</a>`;
+          },
+          infinite: true,
+          prevArrow: false,
+          nextArrow: false,
+          slidesToShow: slidesToShow,
+          slidesToScroll: slidesToScroll
+        });
+
+        // Open big image when a gallery image is clicked.
+        $(".slick-list").magnificPopup({
+          delegate: "a",
+          type: "image",
+          gallery: {
+            enabled: true
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
