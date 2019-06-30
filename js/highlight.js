@@ -11,12 +11,10 @@ async function Highlight() {
         })
       });
 }
-console.log(arrayHL);
 let i = 0 ;
 function Next(){
   const list_div = document.querySelector("#section5");
   i++;
-  console.log(arrayHL[i]);
   list_div.innerHTML =`
   
   <video width="400" controls>
@@ -32,7 +30,6 @@ function Next(){
 }
 function Prev(){
   const list_div = document.querySelector("#section5");
-  console.log(arrayHL[i]);
   i--;
   list_div.innerHTML =`
   

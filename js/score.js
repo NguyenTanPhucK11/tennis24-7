@@ -30,7 +30,7 @@ function logIn(){
   docRef.get().then(function (querySnapshot) {
      querySnapshot.forEach( function(data){
         if(document.getElementById("password-login").value == data.data().password){
-          alert("Login");
+          alert("Welcome " + data.data().name +" to web tennis" );
           login = true;
           Login();
         }
@@ -117,8 +117,6 @@ function Login(){
     var docRef = db.collection("Account").where("email", "==","" + document.getElementById("email-login").value)
     docRef.get().then(function (querySnapshot) {
       querySnapshot.forEach(function(data){
-
-        if(login == true){
           document.querySelector("#form-login").innerHTML = `Information</br>
           ${data.data().name} </br>
           ${data.data().email} </br>
@@ -126,14 +124,7 @@ function Login(){
           <img class="circular--landscape" width = "20%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2Fadmin.jpg?alt=media&token=8dd21850-e9ba-43da-a2ae-d2c82a051ad2" ></br>
           <button class="btn btn-primary" id = "logout" onclick ="logOut()">Log out</button>
           `;
-          if(data.data().email == "admin@gmail.com"){
-            document.querySelector("#addNews").innerHTML = `<a href="img.html" target="_blank">Continue</a>`
-            
-          }
-          else {
-            document.querySelector("#addNews").innerHTML = "";
-          }
-        }
+            document.querySelector("#addNews").innerHTML = `<a onclick = "formNews()" >Add news</a>`
       })
     });
   
@@ -183,8 +174,6 @@ scoreData();
 function scoreData() {
   const list_div = document.querySelector("#list-score");
   let inputDatetime =""+ $('#datetime').val();
-
-  console.log(login);
   if(checkCount != inputDatetime || checkPopup == true){
     $('#list-score').empty();
     var docRef = db.collection("Score").where("Date", "==","2019-01-01")
@@ -241,10 +230,10 @@ function scoreData() {
                           <div class="col-md-4 col-lg-4 text-center mb-4 mb-lg-0">
                             <div class="d-inline-block">
                               <div class="bg-black py-2 px-4 mb-2 text-white d-inline-block rounded"><span class="h5">
-                              ${data.data().W1}:${data.data().L1}</br>
-                              ${data.data().W2}:${data.data().L2}</br>
-                              ${data.data().W3 != "undefined" ? + data.data().W3 : ""}
-                              ${data.data().L3 != "undefined" ? + data.data().L3 : ""}
+                              ${data.data().W1} : ${data.data().L1}</br>
+                              ${data.data().W2} : ${data.data().L2}</br>
+                              ${data.data().W3 != "undefined" ? +  data.data().W3 + " : " : ""}
+                              ${data.data().L3 != "undefined" ? +  data.data().L3 : ""}
                               </span></div>
                             </div>
                           </div>
@@ -314,9 +303,9 @@ function scoreData() {
                           <div class="col-md-4 col-lg-4 text-center mb-4 mb-lg-0">
                             <div class="d-inline-block">
                               <div class="bg-black py-2 px-4 mb-2 text-white d-inline-block rounded"><span class="h5">
-                              ${data.data().W1}:${data.data().L1}</br>
-                              ${data.data().W2}:${data.data().L2}</br>
-                              ${data.data().W3 != "undefined" ? + data.data().W3 : ""}
+                              ${data.data().W1} : ${data.data().L1}</br>
+                              ${data.data().W2} : ${data.data().L2}</br>
+                              ${data.data().W3 != "undefined" ? + data.data().W3 + " : " : ""}
                               ${data.data().L3 != "undefined" ? + data.data().L3 : ""}
                               </span></div>
                             </div>

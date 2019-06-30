@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/NguyenTanPhucK11/tennis-247#readme",
   "dependencies": {
-    "@google-cloud/storage": "^2.5.0"
+    "@google-cloud/storage": "^2.5.0",
+    "firebase": "^6.2.4"
   }
 }

@@ -16,6 +16,13 @@ http://www.tooplate.com/view/2109-the-card
   
     z-index:1;
 }
+.overlayRight {
+  position:absolute;
+
+  right: 50%;
+
+  z-index:1;
+}
 body {
   
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
@@ -1864,6 +1871,14 @@ a:hover {
 /* Form login */
 .login-form {
   width: 340px;
+    margin: 50px auto;
+    margin-bottom: 15px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+}
+.login-form-addnews {
+  width: 680px;
     margin: 50px auto;
     margin-bottom: 15px;
     background: #f7f7f7;
