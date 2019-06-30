@@ -12,6 +12,7 @@ var db = firebase.firestore();
 
 let existAdd = false;
 let login = false;
+let isAdmin = false;
 let set_size = `width = '20' hight = 30 style="text-align:center" `;
 var idEdit;
 var checkPopup = false;
@@ -108,15 +109,12 @@ function Account(){
 }
 function Login(){
   if(login == true){
-    if(existAdd == false){
-      document.getElementById("inline-popups").innerHTML += '<a href="#test-popup" data-effect="mfp-zoom-in" onclick="list_input()"><i class="fa fa-plus-square"></i></a>';
-    }    
-    $('button[id^="delete"]').show();
-    $('button[id^="edit"]').show();
-    existAdd = true;
+
     var docRef = db.collection("Account").where("email", "==","" + document.getElementById("email-login").value)
     docRef.get().then(function (querySnapshot) {
       querySnapshot.forEach(function(data){
+
+        if(login == true){
           document.querySelector("#form-login").innerHTML = `Information</br>
           ${data.data().name} </br>
           ${data.data().email} </br>
@@ -124,7 +122,23 @@ function Login(){
           <img class="circular--landscape" width = "20%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2Fadmin.jpg?alt=media&token=8dd21850-e9ba-43da-a2ae-d2c82a051ad2" ></br>
           <button class="btn btn-primary" id = "logout" onclick ="logOut()">Log out</button>
           `;
-            document.querySelector("#addNews").innerHTML = `<a onclick = "formNews()" >Add news</a>`
+          if(data.data().email == "admin@gmail.com"){
+            isAdmin == true;
+            document.querySelector("#addNews").innerHTML = `<button type="submit" class="btn btn-primary btn-block" onclick = "formNews()" >Manager news</button>`;
+            if(existAdd == false){
+              document.getElementById("inline-popups").innerHTML += '<a href="#test-popup" data-effect="mfp-zoom-in" onclick="list_input()"><i class="fa fa-plus-square"></i></a>';
+            }    
+            
+            $('button[id^="delete"]').show();
+            $('button[id^="edit"]').show();
+              
+            existAdd = true;
+          }
+          else {
+            isAdmin == false;
+            document.querySelector("#addNews").innerHTML = "";
+          }
+        }
       })
     });
   
@@ -174,16 +188,18 @@ scoreData();
 function scoreData() {
   const list_div = document.querySelector("#list-score");
   let inputDatetime =""+ $('#datetime').val();
+
+  console.log(login);
   if(checkCount != inputDatetime || checkPopup == true){
     $('#list-score').empty();
-    var docRef = db.collection("Score").where("Date", "==","2019-01-01")
+    var docRef = db.collection("Score").where("Date", "==","" +inputDatetime)
     docRef.get().then(function (querySnapshot) {
       querySnapshot.forEach(function(data){
         let imgW = data.data().Winner;
         let imgL = data.data().Loser;
         imgW = imgW.replace(" ","%20");
         imgL = imgL.replace(" ","%20");
-        if(login == true){
+        if(login == true && isAdmin == true){
           list_div.innerHTML += 
           
           `
@@ -291,7 +307,7 @@ function scoreData() {
                             <div class="text-center text-lg-left">
                               <div class="d-block d-lg-flex align-items-center">
                                 <div class="image image-small text-center mb-3 mb-lg-0 mr-lg-3">
-                                  <img src="https://raw.githubusercontent.com/NguyenTanPhucK11/dataOfTennis/master/flags/${data.data().Winner}.png" width ="200px" alt="Image" class="img-fluid">
+                                  <img class="circular--landscape" src="https://raw.githubusercontent.com/NguyenTanPhucK11/dataOfTennis/master/flags/${data.data().Winner}.png" width ="200px" alt="Image" class="img-fluid">
                                 </div>
                                 <div class="text">
                                   <h3 class="h5 mb-0 text-black">${data.data().Winner}</h3>
@@ -315,7 +331,7 @@ function scoreData() {
                             <div class="">
                               <div class="d-block d-lg-flex align-items-center">
                                 <div class="image image-small ml-lg-3 mb-3 mb-lg-0 order-2">
-                                  <img src="https://raw.githubusercontent.com/NguyenTanPhucK11/dataOfTennis/master/flags/${data.data().Loser}.png" width ="200px" alt="Image" class="img-fluid">
+                                  <img class="circular--landscape" src="https://raw.githubusercontent.com/NguyenTanPhucK11/dataOfTennis/master/flags/${data.data().Loser}.png" width ="200px" alt="Image" class="img-fluid">
                                 </div>
                                 <div class="text order-1 w-100">
                                   <h3 class="h5 mb-0 text-black">${data.data().Loser}</h3>

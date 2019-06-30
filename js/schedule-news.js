@@ -49,7 +49,14 @@ function formLoginAdmin(){
           <img class="circular--landscape" width = "20%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2Fadmin.jpg?alt=media&token=8dd21850-e9ba-43da-a2ae-d2c82a051ad2" ></br>
           <button class="btn btn-primary" id = "logout" onclick ="logOut()">Log out</button>
           `;
+          if(data.data().email == "admin@gmail.com"){
             document.querySelector("#addNews").innerHTML = `<button type="submit" class="btn btn-primary btn-block" onclick = "formNews()" >Manager news</button>`
+            
+          }
+          else {
+            document.querySelector("#addNews").innerHTML = "";
+          }
+            
       })
     });
 }
