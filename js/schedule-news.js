@@ -1,4 +1,3 @@
-formNews();
 function formNews(){
   document.querySelector("#form-login").innerHTML =
  `  
