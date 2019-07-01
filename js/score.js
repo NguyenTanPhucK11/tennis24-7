@@ -359,6 +359,7 @@ function editData(id){
   `;
   idEdit = id;
   document.getElementById("" + id).click();
+  
 }
 
 
@@ -620,9 +621,13 @@ function list_input(){
     document.querySelector("#test-popup").innerHTML +=`
   
     <div class="col-sm-12 text-center">
-        <button class="btn btn-primary" title="Submit" onclick = "add_schedule()">Add Schedule</button>
+        
         <button class="btn btn-primary" title="Submit" onclick = "add_score()">Add Score</button>
         <button class="btn btn-primary" title="Submit" onclick = "update_score(idEdit)">Update score</button>
+        <div style = "height : 10px">
+        <button class="btn btn-primary" title="Submit" onclick = "add_schedule()" >Add Schedule</button>
+        </div>
+       
     </div>
    `;
   }

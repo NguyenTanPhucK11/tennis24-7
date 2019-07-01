@@ -121,7 +121,6 @@ function Schedule() {
             
           }
           list_div.innerHTML +=`
-                  <button class="btn" id = "deleteS${data.data().ID}" onclick = "deleteDataS(${data.data().ID})" style="display: none;"><i class="fa fa-trash"></i></button> 
                    <div class="row align-items-center mb-5">
                    
                       <div class="col-md-12">
