@@ -490,7 +490,7 @@ function scoreData() {
                                 </div>
                                 <div class="text">
                                   <h3 class="h5 mb-0 text-black">${data.data().Winner}</h3>
-                                  <span class="text-uppercase small country">Brazil</span>
+                                  <span class="text-uppercase small country">${data.data().Location}</span>
                                 </div>
                               </div>
                             </div>
@@ -514,7 +514,7 @@ function scoreData() {
                                 </div>
                                 <div class="text order-1 w-100">
                                   <h3 class="h5 mb-0 text-black">${data.data().Loser}</h3>
-                                  <span class="text-uppercase small country">London</span>
+                                  <span class="text-uppercase small country">${data.data().Location}</span>
                                 </div>
                               </div>
                             </div>
