@@ -73,16 +73,16 @@ async function News() {
             <h3 style="font-family:courier;">${data.data().Date}</h3>
             
             </div>
-            <img width = "30%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2F`
-            + `test1` + `.jpg?alt=media&token=98c62ff7-783b-40b8-a93e-41b46c05a238" > 
+            <img width = "30%" src="https://firebasestorage.googleapis.com/v0/b/tennis-9c684.appspot.com/o/image%2F`+i+`.jpg?alt=media&token=753d5181-4039-412b-8de3-45f4af557ada" > 
             </br>
             </br>
           `;
-
+          i++;
+          if(i>21){i=1};
         })
       });
     }
-
+     
       isLoopDate = document.getElementById("datetime").value;
 }
 function fullNews(ID){

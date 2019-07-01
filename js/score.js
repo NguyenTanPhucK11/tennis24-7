@@ -116,6 +116,7 @@ function logOut(){
 function CreateAccount(){
   document.querySelector("#form-login").innerHTML = `
   <div class="login-form">
+  
         <h2 style="color: black" class="text-center">Register</h2>     
         <div class="form-group">
             <input type="text" class="form-control" placeholder="First name" id = "firstname" required="required">
@@ -147,7 +148,7 @@ function Account(){
     <strong>Danger!</strong> Those passwords didn't match. Try again.
   </div>`
     
-  }else{
+  }else {
     $(document).ready(function(){
       db.collection("Account").doc("" + document.getElementById("email").value).set({
         name : document.getElementById("firstname").value +" " + document.getElementById("lastname").value ,
@@ -185,7 +186,7 @@ function ShowFeedBack(){
     var docRef = db.collection("FeedBack");
     docRef.get().then(function (querySnapshot) {
       querySnapshot.forEach(function(data){
-        document.querySelector("#showfeedback-d").innerHTML += `${data.data().email} : ${data.data().contentfeedback}`;
+        document.querySelector("#showfeedback-d").innerHTML += `${data.data().email} : ${data.data().contentfeedback}</br>`;
       })
     });
   }
@@ -262,7 +263,7 @@ function Login(){
     <div class="login-form" >
           <h2 style="color: black" class="text-center">Log in</h2>       
           <div class="form-group">
-              <input type="email" class="form-control" placeholder="Username" id = "email-login" required="required">
+              <input type="email" class="form-control" placeholder="Username"  pattern=" ^[A-Za-z0-9_.]{6,32}@([a-zA-Z0-9]{2,12})(.[a-zA-Z]{2,12})+$" id = "email-login" required="required">
           </div>
           <div class="form-group">
               <input type="password" class="form-control" placeholder="Password" id = "password-login" required="required">
