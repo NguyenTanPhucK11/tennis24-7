@@ -1,6 +1,4 @@
 
-
-console.log(formatted_date);
 function formLoginAdmin(){
   var docRef = db.collection("Account").where("email", "==","admin@gmail.com")
     docRef.get().then(function (querySnapshot) {
@@ -54,14 +52,16 @@ async function addNews(){
 
 let isLoopDate ;
 let idNews;
+$('#datetimeNews').val(formatted_date);
 News();
 async function News() {
-
+  let datetime_news =document.getElementById("datetimeNews").value;
   document.querySelector("#section1").innerHTML =``;
-    let datetime_news =""+ $('#datetime').val();
+    
     const list_div = document.querySelector("#section1");
     let i = 1;
-    if(isLoopDate != datetime_news){
+    console.log(datetime_news);
+      
       var docRef = db.collection("News").where("Date", "==","" + datetime_news)
       await docRef.get().then(function (querySnapshot) {
         querySnapshot.forEach(function(data){
@@ -81,9 +81,7 @@ async function News() {
           if(i>21){i=1};
         })
       });
-    }
-     
-      isLoopDate = document.getElementById("datetime").value;
+       
 }
 function fullNews(ID){
   idNews = ID;
@@ -110,11 +108,12 @@ function fullNews(ID){
 }
 var exitsNP = false;
 $('#datetimeSchedule').val(formatted_date);
+
 Schedule();
 function Schedule() {
     const list_div = document.querySelector("#section2");
       list_div.innerHTML = ``;
-      var docRef = db.collection("Schedule").where("Date", "==","2019-01-01")
+      var docRef = db.collection("Score").where("Date", "==","" + document.getElementById("datetimeSchedule").value)
       docRef.get().then(function (querySnapshot) {
         querySnapshot.forEach(function(data){
           if(isAdmin == true){
@@ -155,7 +154,7 @@ function Schedule() {
                                 </div>
                                 <div class="text">
                                   <h3 class="h5 mb-0 text-black">${data.data().Winner}</h3>
-                                  <span class="text-uppercase small country">Brazil</span>
+                                  <span class="text-uppercase small country">${data.data().Location}</span>
                                 </div>
                               </div>
                             </div>
@@ -210,6 +209,83 @@ if( current_datetime_month < 10 ){
 if( current_datetime_day < 10 ){
   current_datetime_day = "0" + current_datetime_day;
 }
+
+
+function PrevNews(){
+  day_schedule--;
+  if(day_schedule == 0){
+    if(month_schedule == 5 ||month_schedule == 7 ||month_schedule == 10 ||month_schedule == 12){
+      month_schedule -= 1;
+      day_schedule = 30;
+    }
+  }else if(day_schedule == 0){
+    if(month_schedule == 2 || month_schedule == 4 ||month_schedule == 6 ||month_schedule == 9 ||month_schedule == 11||month_schedule == 1||month_schedule == 8 ){
+      month_schedule -= 1;
+      day_schedule = 31;
+    }
+  }
+  if (((year_schedule % 4 == 0) && (year_schedule % 100!= 0)) || (year_schedule %400 == 0)){
+    if(month_schedule == 3 && day_schedule == 0){
+      month_schedule --;
+      day_schedule = 29;
+    }
+  }else{
+    if(month_schedule == 3 && day_schedule == 0){
+      month_schedule --;
+      day_schedule =28;
+    }
+  }
+  let formatted_date_schedule = year_schedule  + "-" + month_schedule  + "-" +day_schedule;
+  if(day_schedule<10){
+    formatted_date_schedule = year_schedule  + "-" + month_schedule  + "-0" +day_schedule;
+  }
+  if(month_schedule<10){
+    formatted_date_schedule = year_schedule  + "-0" + month_schedule  + "-" +day_schedule;
+  }
+  if(month_schedule<10 && day_schedule<10){
+    formatted_date_schedule = year_schedule  + "-0" + month_schedule  + "-0" +day_schedule;
+  }
+  $('#datetimeNews').val(formatted_date_schedule);
+  News();
+}
+function NextNews(){
+  day_schedule ++ ;
+  if(day_schedule == 32){
+    if(month_schedule == 1 ||month_schedule == 3 ||month_schedule == 5 ||month_schedule == 7 ||month_schedule == 8 ||month_schedule == 10 ||month_schedule == 12){
+      month_schedule += 1;
+      day_schedule = 1;
+    }
+  }else if(day_schedule == 31){
+    if(month_schedule == 4 || month_schedule == 4 ||month_schedule == 6 ||month_schedule == 9 ||month_schedule == 11 ){
+      month_schedule += 1;
+      day_schedule = 1;
+    }
+  }
+  if (((year_schedule % 4 == 0) && (year_schedule % 100!= 0)) || (year_schedule %400 == 0)){
+    if(month_schedule == 2 && day_schedule == 29){
+      month_schedule++;
+      day_schedule =1;
+    }
+  }else{
+    if(month_schedule == 2 && day_schedule == 28){
+      month_schedule++;
+      day_schedule =1;
+    }
+  }
+  let formatted_date_schedule ;
+  if(day_schedule<10){
+    formatted_date_schedule = year_schedule  + "-" + month_schedule  + "-0" +day_schedule;
+  }
+  if(month_schedule<10){
+    formatted_date_schedule = year_schedule  + "-0" + month_schedule  + "-" +day_schedule;
+  }
+  if(month_schedule<10 && day_schedule<10){
+    formatted_date_schedule = year_schedule  + "-0" + month_schedule  + "-0" +day_schedule;
+  }
+  $('#datetimeNews').val(formatted_date_schedule);
+  News();
+}
+
 function PrevSchedule(){
   day_schedule--;
   if(day_schedule == 0){
