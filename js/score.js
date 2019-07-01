@@ -219,7 +219,7 @@ function Login(){
             isAdmin == true;
             document.querySelector("#addNews").innerHTML = `<button type="submit" class="btn btn-primary btn-block" onclick = "formNews()" >Manager news</button>`;
             document.querySelector("#form-login").innerHTML = ` 
-            <div text = "center">
+            <div class = "center">
             <img class="circular--landscape" width = "20%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2Fadmin.jpg?alt=media&token=8dd21850-e9ba-43da-a2ae-d2c82a051ad2" ></br><div class >
             ${data.data().name} </br>
             ${data.data().email} </br>
@@ -290,7 +290,7 @@ let emailforget;
 function forgotPass(){
   document.querySelector("#form-login").innerHTML = `
   <div class="login-form">
-        <h2 style="color: black" class="text-center">Register</h2>     
+        <h2 style="color: black" class="text-center">Forgot password</h2>     
         <div class="form-group">
             <input type="email" class="form-control" placeholder="Email" id = "emailforget" required="required">
         </div>

@@ -67,10 +67,10 @@ async function News() {
         querySnapshot.forEach(function(data){
           list_div.innerHTML +=`
           
-            <div class="overlay">
-            <h1 style="font-family:courier;"><a href="#"  onclick="fullNews(${data.data().ID})">${data.data().main}</a></h1>
-            <h2 style="font-family:courier;">${data.data().sub}</h2></br>
-            <h3 style="font-family:courier;">${data.data().Date}</h3>
+            <div class="overlay" >
+            <h1 style="font-family: "Times New Roman", Times, serif;"><a href="#"  onclick="fullNews(${data.data().ID})">${data.data().main}</a></h1>
+            <h2 style="font-family: "Times New Roman", Times, serif;">${data.data().sub}</h2></br>
+            <h3 style="font-family: "Times New Roman", Times, serif;">${data.data().Date}</h3>
             
             </div>
             <img width = "30%" src="https://firebasestorage.googleapis.com/v0/b/tennis-9c684.appspot.com/o/image%2F`+i+`.jpg?alt=media&token=753d5181-4039-412b-8de3-45f4af557ada" > 
@@ -90,12 +90,12 @@ function fullNews(ID){
         querySnapshot.forEach(function(data){
           
           document.querySelector("#section1").innerHTML =`
-            <div class="overlayRight">
+            <div class="overlayRight" style = "border-style: inset;" >
             <a href="#"  onclick="News()"><i class="fa fa-long-arrow-left">BACK</i></a>
-            <h1 style="font-family:courier;">${data.data().main}</h1>
-            <h2 style="font-family:courier;">${data.data().sub}</h2></br>
-            <h3 style="font-family:courier;">${data.data().content}</h3>
-            <h3 style="font-family:courier;">${data.data().Date}</h3>
+            <h1 style="font-family: "Times New Roman", Times, serif;">${data.data().main}</h1>
+            <h2 style="font-family: "Times New Roman", Times, serif;">${data.data().sub}</h2></br>
+            <h3 style="font-family: "Times New Roman", Times, serif;">${data.data().content}</h3>
+            <h3 style="font-family: "Times New Roman", Times, serif;">${data.data().Date}</h3>
             
             </div>
             
