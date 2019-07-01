@@ -1,54 +1,24 @@
-function formNews(){
-  document.querySelector("#form-login").innerHTML =
- `  
-      <div class="login-form-addnews">
-  
-      
-        <h2 style = "color : black">News control: Add news</h2>
-       
-        <input type = "text" class="btn btn-primary" id = "countNews" >
-        <form>
-          <div class="form-group">
-            <label style = "color : black" >Main Title</label>
-            <textarea class="form-control" rows="1" id="title"></textarea>
-          </div>
-        </form>
-        <form>
-          <div class="form-group">
-            <label style = "color : black" for="comment">Subheading</label>
-            <textarea class="form-control" rows="5" id="sub"></textarea>
-          </div>
-        </form>
-        <form>
-          <div class="form-group">
-            <label style = "color : black" for="comment">Summary content</label>
-            <textarea class="form-control" rows="5" id="summary"></textarea>
-          </div>
-        </form>
-        <form>
-          <div class="form-group">
-            <label style = "color : black" for="comment">Content</label>
-            <textarea class="form-control" rows="5" id="content"></textarea>
-          </div>
-        </form>
-        <button type="submit" class="btn btn-primary btn-block" id = "addNews" onclick = "addNews()">Next</button>
-        
-        <a href="#"  onclick="formLoginAdmin()"><i class="fa fa-long-arrow-left"></i></a>
-        <a style = "margin-left: 93%;" href="#"  onclick="formNews()"><i class="fa fa-plus-square"></i></a>
-        
-    </div>`
-}
+
+
+console.log(formatted_date);
 function formLoginAdmin(){
   var docRef = db.collection("Account").where("email", "==","admin@gmail.com")
     docRef.get().then(function (querySnapshot) {
       querySnapshot.forEach(function(data){
-          document.querySelector("#form-login").innerHTML = `Information</br>
-          ${data.data().name} </br>
-          ${data.data().email} </br>
-          ${data.data().phone} </br>
-          <img class="circular--landscape" width = "20%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2Fadmin.jpg?alt=media&token=8dd21850-e9ba-43da-a2ae-d2c82a051ad2" ></br>
-          <button class="btn btn-primary" id = "logout" onclick ="logOut()">Log out</button>
-          `;
+        document.querySelector("#form-login").innerHTML = ` <div class >
+        ${data.data().name} </br>
+        ${data.data().email} </br>
+        ${data.data().phone} </br>
+        <img class="circular--landscape" width = "20%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2Fadmin.jpg?alt=media&token=8dd21850-e9ba-43da-a2ae-d2c82a051ad2" ></br>
+        <div style = "height : 10px"><div>
+        <button class="btn btn-primary" id = "logout" onclick ="logOut()">Log out</button>
+        <div class = "login-form-feedback">
+        <div class="form-group" >
+          <button type="submit" class="btn btn-primary btn-block" id = "showfeedback" onclick = "ShowFeedBack()">Show feed back</button>
+          <div id ="showfeedback-d" style = "color : black ">
+          </div>
+        </div>
+        </div>`
           if(data.data().email == "admin@gmail.com"){
             document.querySelector("#addNews").innerHTML = `<button type="submit" class="btn btn-primary btn-block" onclick = "formNews()" >Manager news</button>`
             
@@ -71,48 +41,88 @@ async function addNews(){
     main : "" + document.getElementById("title").value ,
     sub : "" + document.getElementById("sub").value,
     summary : "" + document.getElementById("summary").value ,
-    content : "" + document.getElementById("content").value
-
+    content : "" + document.getElementById("content").value,
+    Date : "" + document.getElementById("countNewsTime").value,
+    ID : "" + checkcountNews 
   }).then(function () {
+    News();
     alert("Add news successful!");
   }).catch(function (error) {
     console.error("Error writing document: ", error);
   });
 }
+
+let isLoopDate ;
+let idNews;
 News();
-function News() {
+async function News() {
+
+  document.querySelector("#section1").innerHTML =``;
+    let datetime_news =""+ $('#datetime').val();
     const list_div = document.querySelector("#section1");
-    let alternate = 1;
-      var docRef = db.collection("Score").where("Date", "==","2019-01-01")
-      docRef.get().then(function (querySnapshot) {
+    let i = 1;
+    if(isLoopDate != datetime_news){
+      var docRef = db.collection("News").where("Date", "==","" + datetime_news)
+      await docRef.get().then(function (querySnapshot) {
         querySnapshot.forEach(function(data){
-          let i = 1;
           list_div.innerHTML +=`
           
             <div class="overlay">
-            <h1 style="font-family:courier;">Content above your video</h1>
-            <h2 style="font-family:courier;">Content above your video</h2>
-            <h3 style="font-family:courier;">Content above your video</h3>
-            <p style="font-family:courier;">Content above your video</p>
+            <h1 style="font-family:courier;"><a href="#"  onclick="fullNews(${data.data().ID})">${data.data().main}</a></h1>
+            <h2 style="font-family:courier;">${data.data().sub}</h2></br>
+            <h3 style="font-family:courier;">${data.data().Date}</h3>
+            
             </div>
-            <img width = "60%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2F${i}.jpg?alt=media&token=98c62ff7-783b-40b8-a93e-41b46c05a238" > 
+            <img width = "30%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2F`
+            + `test1` + `.jpg?alt=media&token=98c62ff7-783b-40b8-a93e-41b46c05a238" > 
             </br>
             </br>
-          `
-          if(i>4){i =1};
+          `;
+
         })
       });
+    }
+
+      isLoopDate = document.getElementById("datetime").value;
 }
+function fullNews(ID){
+  idNews = ID;
+  var docRef = db.collection("News").where("ID", "==","" + idNews)
+      docRef.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function(data){
+          
+          document.querySelector("#section1").innerHTML =`
+            <div class="overlayRight">
+            <a href="#"  onclick="News()"><i class="fa fa-long-arrow-left">BACK</i></a>
+            <h1 style="font-family:courier;">${data.data().main}</h1>
+            <h2 style="font-family:courier;">${data.data().sub}</h2></br>
+            <h3 style="font-family:courier;">${data.data().content}</h3>
+            <h3 style="font-family:courier;">${data.data().Date}</h3>
+            
+            </div>
+            
+            </br>
+            </br>
+          `;
+        })
+      });
+      isLoopDate = null;
+}
+var exitsNP = false;
+$('#datetimeSchedule').val(formatted_date);
 Schedule();
 function Schedule() {
     const list_div = document.querySelector("#section2");
-
-      var docRef = db.collection("Score").where("Date", "==","2019-01-01")
+      list_div.innerHTML = ``;
+      var docRef = db.collection("Schedule").where("Date", "==","2019-01-01")
       docRef.get().then(function (querySnapshot) {
         querySnapshot.forEach(function(data){
+          if(isAdmin == true){
+          $('button[id^="deleteS"]').show();
+            
+          }
           list_div.innerHTML +=`
-          
-              <div class="container">      
+                  <button class="btn" id = "deleteS${data.data().ID}" onclick = "deleteDataS(${data.data().ID})" style="display: none;"><i class="fa fa-trash"></i></button> 
                    <div class="row align-items-center mb-5">
                    
                       <div class="col-md-12">
@@ -166,7 +176,7 @@ function Schedule() {
                                 </div>
                                 <div class="text order-1 w-100">
                                   <h3 class="h5 mb-0 text-black">${data.data().Loser}</h3>
-                                  <span class="text-uppercase small country">London</span>
+                                  <span class="text-uppercase small country">${data.data().Location}</span>
                                 </div>
                               </div>
                             </div>
@@ -174,8 +184,103 @@ function Schedule() {
                         </div>
                       </div>
                     </div>
-                  </div>
         `
         })
       });
+}
+
+function deleteDataS(id){
+  $(document).ready(function(){
+    
+      db.collection("Schedule").doc(""+id).delete().then(function() {
+          console.log("Document successfully deleted!");
+      }).catch(function(error) {
+          console.error("Error removing document: ", error);
+      });
+  });
+
+  Schedule();
+}
+let day_schedule = current_datetime.getDate();
+let month_schedule = current_datetime.getMonth()+ 1;
+let year_schedule = current_datetime.getFullYear();
+if( current_datetime_month < 10 ){
+  current_datetime_month = "0" + current_datetime_month;
+}
+if( current_datetime_day < 10 ){
+  current_datetime_day = "0" + current_datetime_day;
+}
+function PrevSchedule(){
+  day_schedule--;
+  if(day_schedule == 0){
+    if(month_schedule == 5 ||month_schedule == 7 ||month_schedule == 10 ||month_schedule == 12){
+      month_schedule -= 1;
+      day_schedule = 30;
+    }
+  }else if(day_schedule == 0){
+    if(month_schedule == 2 || month_schedule == 4 ||month_schedule == 6 ||month_schedule == 9 ||month_schedule == 11||month_schedule == 1||month_schedule == 8 ){
+      month_schedule -= 1;
+      day_schedule = 31;
+    }
+  }
+  if (((year_schedule % 4 == 0) && (year_schedule % 100!= 0)) || (year_schedule %400 == 0)){
+    if(month_schedule == 3 && day_schedule == 0){
+      month_schedule --;
+      day_schedule = 29;
+    }
+  }else{
+    if(month_schedule == 3 && day_schedule == 0){
+      month_schedule --;
+      day_schedule =28;
+    }
+  }
+  let formatted_date_schedule = year_schedule  + "-" + month_schedule  + "-" +day_schedule;
+  if(day_schedule<10){
+    formatted_date_schedule = year_schedule  + "-" + month_schedule  + "-0" +day_schedule;
+  }
+  if(month_schedule<10){
+    formatted_date_schedule = year_schedule  + "-0" + month_schedule  + "-" +day_schedule;
+  }
+  if(month_schedule<10 && day_schedule<10){
+    formatted_date_schedule = year_schedule  + "-0" + month_schedule  + "-0" +day_schedule;
+  }
+  $('#datetimeSchedule').val(formatted_date_schedule);
+  Schedule();
+}
+function NextSchedule(){
+  day_schedule ++ ;
+  if(day_schedule == 32){
+    if(month_schedule == 1 ||month_schedule == 3 ||month_schedule == 5 ||month_schedule == 7 ||month_schedule == 8 ||month_schedule == 10 ||month_schedule == 12){
+      month_schedule += 1;
+      day_schedule = 1;
+    }
+  }else if(day_schedule == 31){
+    if(month_schedule == 4 || month_schedule == 4 ||month_schedule == 6 ||month_schedule == 9 ||month_schedule == 11 ){
+      month_schedule += 1;
+      day_schedule = 1;
+    }
+  }
+  if (((year_schedule % 4 == 0) && (year_schedule % 100!= 0)) || (year_schedule %400 == 0)){
+    if(month_schedule == 2 && day_schedule == 29){
+      month_schedule++;
+      day_schedule =1;
+    }
+  }else{
+    if(month_schedule == 2 && day_schedule == 28){
+      month_schedule++;
+      day_schedule =1;
+    }
+  }
+  let formatted_date_schedule ;
+  if(day_schedule<10){
+    formatted_date_schedule = year_schedule  + "-" + month_schedule  + "-0" +day_schedule;
+  }
+  if(month_schedule<10){
+    formatted_date_schedule = year_schedule  + "-0" + month_schedule  + "-" +day_schedule;
+  }
+  if(month_schedule<10 && day_schedule<10){
+    formatted_date_schedule = year_schedule  + "-0" + month_schedule  + "-0" +day_schedule;
+  }
+  $('#datetimeSchedule').val(formatted_date_schedule);
+  Schedule();
 }

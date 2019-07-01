@@ -1,11 +1,11 @@
 
 var config = {
-  apiKey: "AIzaSyBXhP9jGoX0UGV3KpBezbmywwayVehOn64",
-  authDomain: "tennis-d904d.firebaseapp.com",
+  apiKey: "AIzaSyAogqLlIWQqrewpigRKENk5IXELCW8W4ws",
+  authDomain: "tennis-9c684.firebaseapp.com",
   databaseURL: "https://tennis-d904d.firebaseio.com",
-  projectId: "tennis-d904d",
-  storageBucket: "tennis-d904d.appspot.com",
-  messagingSenderId: "1070894637338"
+  projectId: "tennis-9c684",
+  storageBucket: "tennis-9c684.appspot.com",
+  messagingSenderId: "669160857608"
 };
 firebase.initializeApp(config);
 var db = firebase.firestore();
@@ -18,7 +18,21 @@ var idEdit;
 var checkPopup = false;
 var check_list_input = true;
 var check_account = false;
+var email_login ; 
 
+let current_datetime = new Date()
+let current_datetime_day = current_datetime.getDate();
+let current_datetime_month = current_datetime.getMonth()+ 1;
+let current_datetime_year = current_datetime.getFullYear();
+if( current_datetime_month < 10 ){
+  current_datetime_month = "0" + current_datetime_month;
+}
+if( current_datetime_day < 10 ){
+  current_datetime_day = "0" + current_datetime_day;
+}
+
+let formatted_date = current_datetime_year  + "-" + current_datetime_month + "-" + current_datetime_day;
+$('#datetime').val(formatted_date);
 
 db.collection('Score').get().then(snap => {
   size = snap.size // will return the collection sizes
@@ -26,13 +40,15 @@ db.collection('Score').get().then(snap => {
 });
 
 
-function logIn(){
+async function logIn(){
   var docRef = db.collection("Account").where("email", "==","" +document.getElementById("email-login").value)
-  docRef.get().then(function (querySnapshot) {
+  await docRef.get().then(function (querySnapshot) {
      querySnapshot.forEach( function(data){
         if(document.getElementById("password-login").value == data.data().password){
           alert("Welcome " + data.data().name +" to web tennis" );
           login = true;
+          isAdmin =true;
+          email_login = document.getElementById("email-login").value;
           Login();
         }
         else {
@@ -48,8 +64,49 @@ function logIn(){
         alert("Account not exist.")
       }
     })
+    
 }
+function formNews(){
+  document.querySelector("#form-login").innerHTML =
+ `  
+      <div class="login-form-addnews">
 
+      
+        <h2 style = "color : black">News control: Add news</h2>
+       
+        <input type = "text" class="btn btn-primary" id = "countNewsTime" >
+        <form>
+          <div class="form-group">
+            <label style = "color : black" >Main Title</label>
+            <textarea class="form-control" rows="1" id="title"></textarea>
+          </div>
+        </form>
+        <form>
+          <div class="form-group">
+            <label style = "color : black" for="comment">Subheading</label>
+            <textarea class="form-control" rows="5" id="sub"></textarea>
+          </div>
+        </form>
+        <form>
+          <div class="form-group">
+            <label style = "color : black" for="comment">Summary content</label>
+            <textarea class="form-control" rows="5" id="summary"></textarea>
+          </div>
+        </form>
+        <form>
+          <div class="form-group">
+            <label style = "color : black" for="comment">Content</label>
+            <textarea class="form-control" rows="5" id="content"></textarea>
+          </div>
+        </form>
+        <button type="submit" class="btn btn-primary btn-block" id = "addNews" onclick = "addNews()">Next</button>
+        
+        <a href="#"  onclick="formLoginAdmin()"><i class="fa fa-long-arrow-left"></i></a>
+        <a style = "margin-left: 93%;" href="#"  onclick="formNews()"><i class="fa fa-plus-square"></i></a>
+        
+    </div>`
+    $('#countNewsTime').val(formatted_date);
+}
 function logOut(){
   alert("Log out admin");
   document.querySelector("#addNews").innerHTML = ""
@@ -107,36 +164,90 @@ function Account(){
   }
   Login();
 }
+let feedback ;
+function prevFeedBack(){
+  feedback = document.getElementById("feedback").value;
+  FeedBack();
+}
+function FeedBack(){
+  db.collection("FeedBack").doc("" + email_login).set({
+    contentfeedback : "" + feedback,
+    email : email_login
+  }).then(function () {
+    alert("Feed back successful!");
+  }).catch(function (error) {
+    console.error("Error writing document: ", error);
+  });
+}
+let checkfeedback = false;
+function ShowFeedBack(){
+  if(checkfeedback == false){
+    var docRef = db.collection("FeedBack");
+    docRef.get().then(function (querySnapshot) {
+      querySnapshot.forEach(function(data){
+        document.querySelector("#showfeedback-d").innerHTML += `${data.data().email} : ${data.data().contentfeedback}`;
+      })
+    });
+  }
+  checkfeedback = true;
+}
 function Login(){
   if(login == true){
 
-    var docRef = db.collection("Account").where("email", "==","" + document.getElementById("email-login").value)
+    var docRef = db.collection("Account").where("email", "==","" + email_login)
     docRef.get().then(function (querySnapshot) {
       querySnapshot.forEach(function(data){
 
         if(login == true){
-          document.querySelector("#form-login").innerHTML = `Information</br>
+          document.querySelector("#form-login").innerHTML = ` <div class >
           ${data.data().name} </br>
           ${data.data().email} </br>
           ${data.data().phone} </br>
           <img class="circular--landscape" width = "20%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2Fadmin.jpg?alt=media&token=8dd21850-e9ba-43da-a2ae-d2c82a051ad2" ></br>
+          <div style = "height : 10px"><div>
           <button class="btn btn-primary" id = "logout" onclick ="logOut()">Log out</button>
-          `;
+          <div class = "login-form-feedback">
+          <div class="form-group">
+            <label style = "color : black" >Feed Back</label>
+            <textarea class="form-control" rows="1" id="feedback"></textarea>
+            <button type="submit" class="btn btn-primary btn-block" id = "Buttonfeedback" onclick = "prevFeedBack()">Next</button>
+          </div>
+          </div>`;
+          
           if(data.data().email == "admin@gmail.com"){
             isAdmin == true;
             document.querySelector("#addNews").innerHTML = `<button type="submit" class="btn btn-primary btn-block" onclick = "formNews()" >Manager news</button>`;
+            document.querySelector("#form-login").innerHTML = ` <div class >
+            ${data.data().name} </br>
+            ${data.data().email} </br>
+            ${data.data().phone} </br>
+            <img class="circular--landscape" width = "20%" src="https://firebasestorage.googleapis.com/v0/b/tennis-d904d.appspot.com/o/images%2Fadmin.jpg?alt=media&token=8dd21850-e9ba-43da-a2ae-d2c82a051ad2" ></br>
+            <div style = "height : 10px"><div>
+            <button class="btn btn-primary" id = "logout" onclick ="logOut()">Log out</button>
+            <div class = "login-form-feedback">
+            <div class="form-group" >
+              <button type="submit" class="btn btn-primary btn-block" id = "showfeedback" onclick = "ShowFeedBack()">Show feed back</button>
+              <div id ="showfeedback-d" style = "color : black ">
+              </div>
+            </div>
+            </div>`;
             if(existAdd == false){
               document.getElementById("inline-popups").innerHTML += '<a href="#test-popup" data-effect="mfp-zoom-in" onclick="list_input()"><i class="fa fa-plus-square"></i></a>';
+              existAdd = true;
             }    
             
             $('button[id^="delete"]').show();
             $('button[id^="edit"]').show();
-              
-            existAdd = true;
+            $('button[id^="deleteS"]').show();
+            
+          
           }
           else {
             isAdmin == false;
             document.querySelector("#addNews").innerHTML = "";
+            $('button[id^="delete"]').hide();
+            $('button[id^="edit"]').hide();
+            $('button[id^="deleteS"]').hide();
           }
         }
       })
@@ -161,14 +272,76 @@ function Login(){
           </div>
           <div class="clearfix">
               <label style="color: black" class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
-              <a href="#" class="pull-right">Forgot Password?</a>
+              <p class="text-center" onclick = "forgotPass()"><a href="#" class="pull-right">Forgot Password?</a></p>
+              
           </div>        
      
-      <p class="text-center" onclick = "CreateAccount()"><a href="#">Create an Account</a></p>
-    </div>`
+
+    </div>
+    <p class="text-center" onclick = "CreateAccount()"><a href="#">Create an Account</a></p>`
   }
 }
+let phoneforget ;
+let emailforget;
+function forgotPass(){
+  document.querySelector("#form-login").innerHTML = `
+  <div class="login-form">
+        <h2 style="color: black" class="text-center">Register</h2>     
+        <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email" id = "emailforget" required="required">
+        </div>
+        <div class="form-group">
+            <input type="number" class="form-control" placeholder="Phone" id = "phoneforget" required="required">
+        </div>
+       
+        <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block" id = "pass" onclick ="prevforgetPass()">Next</button>
+          </div>
+  </div>`
+  
+}
+function prevforgetPass(){
+  phoneforget = document.getElementById("phoneforget").value;
+  emailforget = document.getElementById("emailforget").value;
+  Pass();
+}
+function Pass(){
 
+  var docRef = db.collection("Account").where("email", "==","" + emailforget)
+  docRef.get().then(function (querySnapshot) {
+    querySnapshot.forEach(function(data){
+      if(phoneforget == data.data().phone){
+        document.querySelector("#form-login").innerHTML = `
+        <div class="login-form">
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="New password" id = "newpass" required="required">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Confirm" id = "newpassC" required="required">
+        </div>
+            <button type="submit" class="btn btn-primary btn-block" id = "confirm" onclick ="ConfirmForget()">Next</button>
+        </div>
+        </div>
+        </div>`
+      }
+      else{
+        alert("Wrong infomation");
+        forgotPass();
+      }
+      });
+    });
+
+}
+
+function ConfirmForget(){
+  console.log(emailforget);
+  db.collection("Account").doc("" + emailforget).update({
+    password : "" + document.getElementById("newpass").value 
+  }).then(function() {
+    alert("Reset password successful!");
+  });
+  Login();
+}
 function updateKey()
 {
     var key=$("#title").val();
@@ -184,12 +357,12 @@ function editData(id){
   document.getElementById("" + id).click();
 }
 
+
 scoreData();
 function scoreData() {
   const list_div = document.querySelector("#list-score");
   let inputDatetime =""+ $('#datetime').val();
 
-  console.log(login);
   if(checkCount != inputDatetime || checkPopup == true){
     $('#list-score').empty();
     var docRef = db.collection("Score").where("Date", "==","" +inputDatetime)
@@ -197,6 +370,7 @@ function scoreData() {
       querySnapshot.forEach(function(data){
         let imgW = data.data().Winner;
         let imgL = data.data().Loser;
+        
         imgW = imgW.replace(" ","%20");
         imgL = imgL.replace(" ","%20");
         if(login == true && isAdmin == true){
@@ -238,7 +412,7 @@ function scoreData() {
                                 </div>
                                 <div class="text">
                                   <h3 class="h5 mb-0 text-black">${data.data().Winner}</h3>
-                                  <span class="text-uppercase small country">Brazil</span>
+                                  <span class="text-uppercase small country">${data.data().Location}</span>
                                 </div>
                               </div>
                             </div>
@@ -262,7 +436,7 @@ function scoreData() {
                                 </div>
                                 <div class="text order-1 w-100">
                                   <h3 class="h5 mb-0 text-black">${data.data().Loser}</h3>
-                                  <span class="text-uppercase small country">London</span>
+                                  <span class="text-uppercase small country">${data.data().Location}</span>
                                 </div>
                               </div>
                             </div>
@@ -348,7 +522,7 @@ function scoreData() {
         }
       })
     });
-    checkCount = document.getElementById("countData").value;
+    checkCount = document.getElementById("datetime").value;
     
   }
  Login();
@@ -428,6 +602,7 @@ function storeData(start) {
 }
 
 function list_input(){
+  Field("Date");
   Field("Location");
   Field("Winner");
   Field("W1");
@@ -441,14 +616,36 @@ function list_input(){
     document.querySelector("#test-popup").innerHTML +=`
   
     <div class="col-sm-12 text-center">
-        <button class="btn btn-primary" title="Submit" onclick = "add_score()">Add score</button>
+        <button class="btn btn-primary" title="Submit" onclick = "add_schedule()">Add Schedule</button>
+        <button class="btn btn-primary" title="Submit" onclick = "add_score()">Add Score</button>
         <button class="btn btn-primary" title="Submit" onclick = "update_score(idEdit)">Update score</button>
     </div>
    `;
   }
   check_list_input = false;
 }
+function add_schedule(){
+  $(document).ready(function(){
+    db.collection("Schedule").doc().set({
+        Date : "" + document.getElementById("Date").value,
+        Location : "" + document.getElementById("Location").value,
+        Winner : "" + document.getElementById("Winner").value,
+        Loser :"" + document.getElementById("Loser").value,
+        
+        W1 :"" + document.getElementById("W1").value,
+        W2:"" + document.getElementById("W2").value,
+        W3:"" + document.getElementById("W3").value,
+        L1:"" + document.getElementById("L1").value,
+        L2:"" + document.getElementById("L2").value,
+        L3:"" + document.getElementById("L3").value,
 
+      }).then(function () {
+        console.log("Document successfully written!");
+      }).catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+  });
+}
 async function Field(Field){
   const field = Field;
   const arrayField =  Array();
@@ -519,7 +716,8 @@ function myFunction(Field) {
 
 function update_score(id){
   
-  if(document.getElementById("Location").value != "" &&
+  if(document.getElementById("Date").value != "" &&
+  document.getElementById("Location").value != "" &&
   document.getElementById("Winner").value != "" &&
   document.getElementById("W1").value != "" &&
   document.getElementById("W2").value != "" && 
@@ -532,6 +730,7 @@ function update_score(id){
     checkPopup = true;
     $(document).ready(function(){
       db.collection("Score").doc("2019." + id).update({
+        Date:"" + document.getElementById("Date").value,
         Location:"" + document.getElementById("Location").value,
         Winner:"" + document.getElementById("Winner").value,
         W1:"" + document.getElementById("W1").value,
@@ -543,7 +742,7 @@ function update_score(id){
         L3:"" + document.getElementById("L3").value,
         })
         .then(function() {
-            console.log( document.getElementById("Location").value);
+            alert("Succesfully")
         });
     });
     scoreData();
@@ -557,7 +756,7 @@ function update_score(id){
 function add_score(){
   $(document).ready(function(){
     db.collection("Score").doc().set({
-        Date : "2019-01-01" , 
+        Date : "" + document.getElementById("Date").value,
         Location : "" + document.getElementById("Location").value,
         Winner : "" + document.getElementById("Winner").value,
         Loser :"" + document.getElementById("Loser").value,

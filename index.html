@@ -92,11 +92,12 @@
         </header>
       </div>
       <!-- tm-top-container -->
-
+      
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
             <!-- Site content -->
+            
             <div class="tm-content">
               <!-- Section 0 TENNIS -->
               <section class="tm-section tm-section-0">
@@ -116,44 +117,54 @@
 
               <!-- Section 1 NEWS -->
               <section class="tm-section tm-section-1" id ="section1">
-                  
+         
               </section>
 
               <!-- Section 2 SCHEDULE -->
-              <section class="tm-section tm-section-2 mx-auto"  id = "section2">    
-                 
-  
-              </section>
+              <section class="tm-section tm-section-2 mx-auto"  >    
+                        
+                      <!-- Popup itself -->
+                      <div class="col-sm-12 text-center">
+                          <button class="btn btn-primary" onclick="PrevSchedule()">Prev</button>
+                          
+                          <button class="btn btn-primary" onclick="NextSchedule()">Next</button>
+                          <input type = "text" class="btn btn-primary" id="datetimeSchedule"/>
+                      </div>
+                      <div class="container">      
+                          <div id = "section2">
 
+                            </div>
+                      </div>
+                      
+                      
+              </section>
+              
               <!-- Section 3 SCORE -->
               <section class="tm-section tm-section-3 mx-auto">
-                
-                  <div class= "main-list" >
-                      <div class="container">
-                          <form action="" class="form-horizontal">
-                            <div class="control-group">
-                                  <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                      <input size="16" id = "datetime"type="text" value="" readonly>
-                                    
-                                      <span class="add-on"><i class="icon-remove"></i></span>
-	    	                            	<span class="add-on"><i class="icon-th"></i></span>
-                                  </div>
-                              <input type="hidden" id="dtp_input2" value="" /><br/>
+                  <div class="container">
+                      <form action="" class="form-horizontal">
+                        <div class="control-group">
+                              <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                  <input size="16" id = "datetime"type="text" value="" readonly>
+                                
+                                  <span class="add-on"><i class="icon-remove"></i></span>
+                                  <span class="add-on"><i class="icon-th"></i></span>
                               </div>
-                          </form>
-                      </div>
+                          <input type="hidden" id="dtp_input2" value="" /><br/>
+                          </div>
+                      </form>
+                  </div>
                       <button class="btn btn-primary" id = "get_btn" onclick = "scoreData()">Get</button>
 
                       <input type = "text" class="btn btn-primary" id = "countData" >
-                      <ul id="inline-popups">
-                        
-                      </ul>
+      
                       <!-- Popup itself -->
-                      <div id="test-popup" class="white-popup mfp-with-anim mfp-hide">
-                             
-                      </div>
+                  <div style="height: 10px">
+
+                  </div>
                
                   <div id = "list-score">
+                    
                       <!-- <button class="tablinks" onclick = "scoreData()">Men</button>
                       <button class="tablinks" onclick = "scoreData()">Women</button> -->
                   </div>
@@ -183,10 +194,18 @@
                 </section>  
                 <!-- Section 7 LOG IN -->
                <section class="tm-section tm-section-7 mx-auto" >
+                  <div id="test-popup" class="white-popup mfp-with-anim mfp-hide">
+                             
+                    </div>
+                    <ul id="inline-popups">
+                      
+                    </ul>
                 <div id = "addNews"></div>
                 <div class="col-sm-12" id = "form-login">
                   
+
                 </div>
+
                 </section>  
             </div>
           </div>
@@ -195,7 +214,8 @@
      
         <!-- Footer -->
         <footer>
-        
+         <!-- Main Footer Area -->
+         
         </footer>
       </div>
     </div>
@@ -207,7 +227,7 @@
       padding: 10px;
       -webkit-backface-visibility: hidden;
     }
-    #Location , #Winner, #Loser, #L1, #L2, #L3, #W1, #W2, #W3 {
+    #Date, #Location , #Winner, #Loser, #L1, #L2, #L3, #W1, #W2, #W3 {
       display: table;
       background-position: 10px 12px;
       background-repeat: no-repeat;
@@ -218,7 +238,7 @@
       margin: 0 auto;
     }
 
-    #LocationUL , #WinnerUL, #LoserUL, #L1UL, #L2UL, #L3UL, #W1UL, #W2UL, #W3UL {
+    #DateUL, #LocationUL , #WinnerUL, #LoserUL, #L1UL, #L2UL, #L3UL, #W1UL, #W2UL, #W3UL {
       list-style-type: none;
       margin-left: 8.5%;
       width : 70.5%;
@@ -230,7 +250,7 @@
       display:inline-block;
     }
 
-    #LocationUL li a, #WinnerUL li a, #LoserUL li a, #L1UL li a, #L2UL li a, #L3UL li a, #W1UL li a, #W2UL li a, #W3UL li a{
+      #DateUL li a ,#LocationUL li a, #WinnerUL li a, #LoserUL li a, #L1UL li a, #L2UL li a, #L3UL li a, #W1UL li a, #W2UL li a, #W3UL li a{
       border: 1px solid #ddd;
       margin-top: -1px; /* Prevent double borders */
       background-color: #f6f6f6;
@@ -241,7 +261,7 @@
       display: block;
 
     }
-    #LocationUL li a:hover:not(.header), #WinnerUL li a:hover:not(.header), #LoserUL li a:hover:not(.header), #L1UL li a:hover:not(.header), #L2UL li a:hover:not(.header), #L3UL li a:hover:not(.header), #W1UL li a:hover:not(.header), #W2UL li a:hover:not(.header), #W3UL li a:hover:not(.header) {
+    #DateUL li a:hover:not(.header),#LocationUL li a:hover:not(.header), #WinnerUL li a:hover:not(.header), #LoserUL li a:hover:not(.header), #L1UL li a:hover:not(.header), #L2UL li a:hover:not(.header), #L3UL li a:hover:not(.header), #W1UL li a:hover:not(.header), #W2UL li a:hover:not(.header), #W3UL li a:hover:not(.header) {
       background-color: #eee;
     }
     /* text-based popup styling */
@@ -386,7 +406,7 @@
         bgCycle = $("body").backgroundCycle({
           imageUrls: [
             "img/tennis.jpg",
-            "img/photo-03.jpg",
+            "img/s3.jpg",
             "img/photo-04.jpg",
             "img/photo-05.jpg",
             "img/2.jpg",

@@ -2,7 +2,6 @@ var arrayHL = [];
 Highlight();
 async function Highlight() {
    
-      let i = 0;
       var docRef = db.collection("Score").where("Date", "==","2019-01-01")
       await docRef.get().then(function (querySnapshot) {
         querySnapshot.forEach(function(data){
@@ -15,6 +14,7 @@ let i = 0 ;
 function Next(){
   const list_div = document.querySelector("#section5");
   i++;
+  
   list_div.innerHTML =`
   
   <video width="400" controls>
@@ -23,8 +23,8 @@ function Next(){
   </video>
   </br>
   <div class="col-sm-12 text-center">
-    <button class="btn btn-primary" onclick="Next()">Next</button>
     <button class="btn btn-primary" onclick="Prev()">Prev</button>
+    <button class="btn btn-primary" onclick="Next()">Next</button>
   </div>
 `
 }
